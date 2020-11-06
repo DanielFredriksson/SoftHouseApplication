@@ -1,0 +1,70 @@
+Det ena systemet levererar ett radbaserat filformat medan det
+andra kräver XML. Du ska skriva en konverterare som bygger upp 
+rätt XML-struktur. Använd valfritt programspråk! 
+(dock ej C/C++/Python)
+
+Filformat:
+
+P|förnamn|efternamn                 - Person
+T|mobilnummer|fastnätsnummer        - Telefon
+A|gata|stad|postnummer              - Adress
+F|namn|födelseår                    - Familjemedlem? eller familjemedlemmar?
+P kan följas av T, A och F          - En person kan ha Telefon, Adress och Födelse
+F kan följas av T och A             - En Familjemedlem kan ha Telefon och Adress
+
+Alltså:
+Person
+    - Telefon
+    - Adress
+    - Familj
+        - Telefon
+        - Adress
+    - Familj
+        - Telefon
+        - Adress
+    - X-antal familjemedlemmar
+Person
+    - Etc
+
+Exempel:
+
+P|Carl Gustaf|Bernadotte
+T|0768-101801|08-101801                 
+A|Drottningholms slott|Stockholm|10001  
+F|Victoria|1977
+A|Haga Slott|Stockholm|10002
+F|Carl Philip|1979
+T|0768-101802|08-101802
+P|Barack|Obama
+A|1600 Pennsylvania Avenue|Washington, D.C
+Ger XML som:
+
+<people>
+    <person>
+        <firstname>Carl Gustaf</firstname>
+        <lastname>Bernadotte</lastname>
+    </person>
+</people>
+
+
+<people>
+  <person>
+    <firstname>Carl Gustaf</firstname>
+    <lastname>Bernadotte</lastname>
+    <address>
+      <street>Drottningholms slott</street>
+      ...
+     </address>
+    <phone>
+      <mobile>0768-101801</mobile>
+      ...
+    </phone>
+    <family>
+      <name>Victoria</name>
+        <born>1977</born>
+        <address>...</address>
+     </family>
+     <family>...</family>
+  </person>
+  <person>...</person>
+</people>
